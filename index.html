@@ -28,6 +28,9 @@
             margin-top: 20px;
             align-items: center;
         }
+        .hidden {
+            display: none;
+        }
         .left-text {
             flex: 1;
             text-align: left;
@@ -37,7 +40,7 @@
             font-size: 4rem;
             color: #ffcc00;
             margin-bottom: 20px;
-            white-space: nowrap; /* Prevent header from breaking into multiple lines */
+            white-space: nowrap;
         }
         p {
             font-size: 1.5rem;
@@ -61,17 +64,20 @@
             font-size: 1.5rem;
             color: #fff;
             margin-top: 20px;
-            direction: rtl; /* Right-to-left for Urdu text */
+            direction: rtl;
         }
     </style>
 </head>
 <body>
 
-    <!-- Countdown Timer at the Top -->
-    <h2>⏳ Time remaining for the Birthday:</h2>
-    <h2 id="countdown">Loading...</h2>
+    <!-- Countdown Timer Section -->
+    <div id="countdown-section">
+        <h2>⏳ Time till cutie's Birthday:</h2>
+        <h2 id="countdown">Loading...</h2>
+    </div>
 
-    <div class="container">
+    <!-- Birthday Message Section (Initially Hidden) -->
+    <div id="birthday-message" class="container hidden">
         <div class="left-text">
             <h1>🎂 Happy 25th Birthday, Samra! 🎈</h1>
             <p>
@@ -98,6 +104,35 @@
     </div>
 
     <script>
+        // Get the URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const user = urlParams.get('user'); // Get the 'user' parameter from URL
+
+        if (user === 'daniyal') {
+            // If it's Daniyal, skip countdown and show the birthday message directly
+            document.getElementById("countdown-section").style.display = "none";
+            document.getElementById("birthday-message").classList.remove("hidden");
+        } else {
+            // Normal countdown for other visitors
+            checkBirthday();
+            setInterval(updateCountdown, 1000);
+        }
+
+        function checkBirthday() {
+            const now = new Date();
+            const birthday = new Date("Feb 5, 2025 00:00:00");
+            const cutoffTime = new Date("Feb 5, 2025 00:00:00");  // The exact moment the page switches
+
+            if (now >= cutoffTime) {
+                // After 12:00 AM February 5, show the birthday message
+                document.getElementById("countdown-section").style.display = "none";
+                document.getElementById("birthday-message").classList.remove("hidden");
+            } else {
+                // Before 12:00 AM February 5, show countdown
+                updateCountdown();
+            }
+        }
+
         function updateCountdown() {
             const birthday = new Date("Feb 5, 2025 00:00:00").getTime();
             const now = new Date().getTime();
@@ -112,13 +147,11 @@
                 document.getElementById("countdown").innerHTML = 
                     `${days}d ${hours}h ${minutes}m ${seconds}s`;
             } else {
-                // When the countdown finishes, the message changes
-                document.getElementById("countdown").innerHTML = "🎉 It's your Birthday! 🎂";
+                // Once time is up, show the birthday message
+                document.getElementById("countdown-section").style.display = "none";
+                document.getElementById("birthday-message").classList.remove("hidden");
             }
         }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
     </script>
 
 </body>
