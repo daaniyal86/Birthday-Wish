@@ -3,58 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Samra!</title>
+    <title>Happy Birthday, Samra! 🎉🎂</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f9e3e3;
+            font-family: 'Bookman Old Style', serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             text-align: center;
-            padding: 50px;
+        }
+        .container {
+            display: flex;
+            max-width: 80%;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            align-items: center;
+        }
+        .left-text {
+            flex: 1;
+            text-align: left;
         }
         h1 {
-            color: #d6336c;
-            font-size: 3rem;
+            font-family: 'Times New Roman', serif;
+            font-size: 4rem;
+            color: #ffcc00;
+            margin-bottom: 20px;
+            white-space: nowrap; /* Prevent header from breaking into multiple lines */
         }
         p {
-            color: #333;
             font-size: 1.5rem;
             line-height: 1.6;
+            margin: 0;
         }
-        .heart {
-            color: #d6336c;
-            font-size: 4rem;
-            animation: heartbeat 1.5s infinite;
+        .cat-image {
+            width: auto;
+            height: 300px;
+            border-radius: 10px;
+            margin-left: 20px;
         }
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        .highlight {
-            color: #d6336c;
+        #countdown {
+            font-size: 2rem;
+            color: #ffcc00;
             font-weight: bold;
+            margin-top: 10px;
+        }
+        .urdu-poetry {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 20px;
+            direction: rtl; /* Right-to-left for Urdu text */
         }
     </style>
 </head>
 <body>
+
+    <!-- Countdown Timer at the Top -->
+    <h2>⏳ Time remaining for the Birthday:</h2>
+    <h2 id="countdown">Loading...</h2>
+
     <div class="container">
-        <h1>Happy Birthday, Samra! 💖</h1>
-        <p>
-            My dearest Samra,<br><br>
-            From the moment we met six months ago, you've been one of the best parts of my life. 
-            Your presence alone makes everything feel lighter, easier, and a lot more beautiful. 
-            The way you carry yourself, your kindness, your energy—it's something rare, and I feel lucky to know you.<br><br>
-            And those <span class="highlight">pretty eyes</span> of yours? They hold a kind of magic, 
-            a depth that makes the world pause for a second. I don’t know if you realize it, 
-            but you have this way of making people feel special, of making every moment with you unforgettable.<br><br>
-            On your special day, I just want you to know that you are truly one of a kind. 
-            You deserve all the happiness, love, and success in the world, and I hope this year brings you closer 
-            to everything your heart desires.<br><br>
-            Keep being the amazing person you are, and never stop shining the way you do.  
-            Enjoy your day to the fullest—you deserve it all! ❤<br><br>
-            With all the admiration,<br>
-            <strong>Daniyal</strong>
-        </p>
-        <div class="heart">❤</div>
+        <div class="left-text">
+            <h1>🎂 Happy 25th Birthday, Samra! 🎈</h1>
+            <p>
+                🌟 My dearest Samra, <br><br>
+                I wish you the happiest birthday, a day filled with love, peace, celebration and thankfulness to the almighty Allah. The moment we met six months ago, you've been one of the best parts of my life. Your presence alone makes everything brighter and a lot more beautiful. Thank you for existing and being such a kind soul ✨💖  
+                The way you carry yourself, your kindness, your energy, it's something very rare and I feel lucky to have you in my life. 🍀💫<br><br>
+                
+                Those pretty eyes of yours 👀 hold a special kind of magic, a depth that makes the world pause for a second. You have this way of making people feel special and making every moment with you unforgettable. 💕<br><br>
+                
+                On your special day, I just want you to know that you are truly one of a kind. 🎁💜 You deserve all the happiness, love, and success in the world, and I hope this year brings you closer to your dreams and goals and the year is filled with lots of success. Thank you for being an amazing, fun and humorous person. Truly 'Tumsay hi din hota hai, Surmayi Shaam ati hai, Tumsay hi, Tumsay hi ❤️✨<br><br>
+            </p>
+            
+            <div class="urdu-poetry">
+                <p>
+                    ہر خوشی تیری زندگی میں آئے،<br>
+                    یہ دن تیرے لیے خوشی کی کرن بن کر چمکے!<br>
+                    – مرزا غالب
+                </p>
+            </div>
+
+        </div>
+
+        <img src="cat-with-hat.jpg" alt="Cute Cat with Celebration Hat" class="cat-image">
     </div>
+
+    <script>
+        function updateCountdown() {
+            const birthday = new Date("Feb 5, 2025 00:00:00").getTime();
+            const now = new Date().getTime();
+            const timeLeft = birthday - now;
+
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                // When the countdown finishes, the message changes
+                document.getElementById("countdown").innerHTML = "🎉 It's your Birthday! 🎂";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+
 </body>
 </html>
