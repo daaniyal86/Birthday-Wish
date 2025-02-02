@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Bookman Old Style', serif;
-            background: url('countdown-bg.jpg') no-repeat center center fixed;
+            background: url('background.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             margin: 0;
@@ -28,91 +28,69 @@
             margin-top: 20px;
             align-items: center;
         }
-        h1 {
-            font-size: 3rem;
+        .visible {
+            display: flex;
+        }
+        .urdu-poetry {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.5rem;
             color: #ffcc00;
-        }
-        p {
-            font-size: 1.5rem;
-        }
-        .next-button {
-            font-size: 1.5rem;
-            padding: 10px 20px;
-            background: #ffcc00;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
             margin-top: 20px;
-        }
-        #countdown {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-top: 40px;
+            direction: rtl;
         }
     </style>
 </head>
 <body>
-
-    <!-- Countdown Timer Section -->
-    <div id="countdown-section">
+    <div id="countdown-section" class="container visible">
         <h2>⏳ Time till cutie's Birthday:</h2>
         <h2 id="countdown">Loading...</h2>
     </div>
-
-    <!-- Happy Birthday Page -->
+    
     <div id="happy-birthday-page" class="container">
         <h1>🎉 Happy Birthday, Samra! 🎂</h1>
-        <button class="next-button" onclick="goToBlowCandles()">Next Page</button>
+        <button onclick="goToBlowCandles()">Next Page</button>
     </div>
-
-    <!-- Blow Candles Page -->
+    
     <div id="blow-candles-page" class="container">
         <h1>🎂 Blow the Candles! 🎤</h1>
-        <img src="cake-lit.jpg" alt="Cake with Candles" width="300">
+        <img src="cake-with-candles.gif" id="cake-image">
         <p>Blow into your microphone to put out the candles!</p>
-        <button class="next-button" onclick="goToBirthdayMessage()">Next Page</button>
     </div>
-
-    <!-- Birthday Wish Page -->
+    
     <div id="birthday-message" class="container">
-        <h1>🎈 Happy 25th Birthday, Samra! 🎂</h1>
-        <p>
-            🌟 My dearest Samra, <br><br>
-            Wishing you endless happiness, success, and love in this beautiful journey of life. 💖🎉
-        </p>
+        <h1>🎂 Happy Birthday, Samra! 🎈</h1>
+        <p class="urdu-poetry"> "ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے،<br>بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے۔"</p>
     </div>
 
     <script>
-        // Function to get query parameters
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
+        function getUser() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('user');
         }
-
-        const user = getQueryParam("user");
-        const isBirthday = new Date().getMonth() === 1 && new Date().getDate() === 5; // Feb 5
-        const isDevelopment = user === 'daniyal'; // If ?user=daniyal, bypass countdown
-
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(el => el.style.display = 'none');
-            document.getElementById(pageId).style.display = 'block';
+        
+        function checkAccess() {
+            if (getUser() !== 'daniyal') {
+                alert('Access denied!');
+                document.body.innerHTML = "";
+            }
         }
-
+        
         function checkBirthday() {
-            if (isDevelopment || isBirthday) {
-                showPage("happy-birthday-page");
+            const now = new Date();
+            const birthday = new Date("Feb 5, 2025 00:00:00");
+            if (now >= birthday) {
+                document.getElementById("countdown-section").classList.remove("visible");
+                document.getElementById("happy-birthday-page").classList.add("visible");
             } else {
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
             }
         }
-
+        
         function updateCountdown() {
             const birthday = new Date("Feb 5, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             const timeLeft = birthday - now;
-
             if (timeLeft > 0) {
                 const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -120,15 +98,42 @@
                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
                 document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             } else {
-                showPage("happy-birthday-page");
+                document.getElementById("countdown-section").classList.remove("visible");
+                document.getElementById("happy-birthday-page").classList.add("visible");
             }
         }
 
-        function goToBlowCandles() { showPage("blow-candles-page"); }
-        function goToBirthdayMessage() { showPage("birthday-message"); }
+        function goToBlowCandles() {
+            document.getElementById("happy-birthday-page").classList.remove("visible");
+            document.getElementById("blow-candles-page").classList.add("visible");
+            
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                let microphone = audioContext.createMediaStreamSource(stream);
+                let analyser = audioContext.createAnalyser();
+                microphone.connect(analyser);
+                analyser.fftSize = 256;
+                let dataArray = new Uint8Array(analyser.frequencyBinCount);
+                
+                function detectBlow() {
+                    analyser.getByteFrequencyData(dataArray);
+                    let volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+                    if (volume > 50) {
+                        document.getElementById("cake-image").src = "cake-no-candles.png";
+                        setTimeout(() => {
+                            document.getElementById("blow-candles-page").classList.remove("visible");
+                            document.getElementById("birthday-message").classList.add("visible");
+                        }, 2000);
+                    } else {
+                        requestAnimationFrame(detectBlow);
+                    }
+                }
+                detectBlow();
+            });
+        }
 
+        checkAccess();
         checkBirthday();
     </script>
-
 </body>
 </html>
