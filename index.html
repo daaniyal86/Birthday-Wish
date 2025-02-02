@@ -83,6 +83,7 @@
         <h1>🎂 Blow the Candles! 🎤</h1>
         <img src="cake-lit.jpg" alt="Cake with Candles" class="cake-img" id="cake-image">
         <p class="blow-text">Blow into your microphone to put out the candles!</p>
+        <button class="next-button" onclick="goToBirthdayMessage()">Next Page</button>
     </div>
 
     <!-- Birthday Wish Page -->
@@ -100,13 +101,25 @@
     </div>
 
     <script>
-        function checkBirthday() {
-            const now = new Date();
-            const birthday = new Date("Feb 5, 2025 00:00:00");
+        // Check for user parameter
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
 
-            if (now >= birthday) {
+        const user = getQueryParam("user");
+
+        // Check if it's the birthday date or if the user is 'daniyal'
+        const isBirthday = new Date().getMonth() === 1 && new Date().getDate() === 5; // February 5 (Birthday)
+        const isDevelopment = user === 'daniyal'; // If the user is 'daniyal', bypass the countdown
+
+        function checkBirthday() {
+            if (isDevelopment || isBirthday) {
+                // Show all pages
                 document.getElementById("countdown-section").style.display = "none";
                 document.getElementById("happy-birthday-page").style.display = "block";
+                document.getElementById("blow-candles-page").style.display = "block";
+                document.getElementById("birthday-message").style.display = "block";
             } else {
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
@@ -133,31 +146,11 @@
         function goToBlowCandles() {
             document.getElementById("happy-birthday-page").style.display = "none";
             document.getElementById("blow-candles-page").style.display = "block";
+        }
 
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-                let audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                let microphone = audioContext.createMediaStreamSource(stream);
-                let analyser = audioContext.createAnalyser();
-                microphone.connect(analyser);
-                analyser.fftSize = 256;
-                let dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-                function detectBlow() {
-                    analyser.getByteFrequencyData(dataArray);
-                    let volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-
-                    if (volume > 50) {
-                        document.getElementById("cake-image").src = "cake-blown.jpg";
-                        setTimeout(() => {
-                            document.getElementById("blow-candles-page").style.display = "none";
-                            document.getElementById("birthday-message").style.display = "block";
-                        }, 2000);
-                    } else {
-                        requestAnimationFrame(detectBlow);
-                    }
-                }
-                detectBlow();
-            });
+        function goToBirthdayMessage() {
+            document.getElementById("blow-candles-page").style.display = "none";
+            document.getElementById("birthday-message").style.display = "block";
         }
 
         checkBirthday();
