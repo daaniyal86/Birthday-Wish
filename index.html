@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Countdown</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      display: none;
+      height: 100vh;
+      color: white;
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+    }
+    #page1 {
+      display: block;
+      background-image: url('image1.jpg');
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #page2 {
+      display: none;
+      background-image: url('image2.jpg');
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #page3 {
+      display: none;
+      background-image: url('image3.jpg');
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #page4 {
+      display: none;
+      background-image: url('image6.jpg');
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .timer {
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .wish-message {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 36px;
+    }
+    .wish-details {
+      font-family: 'Bookman Old Style', serif;
+      font-size: 24px;
+      text-align: center;
+    }
+    .button {
+      background-color: #f4b400;
+      color: white;
+      font-size: 20px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+    .button:hover {
+      background-color: #f4a400;
+    }
+    #cake-container {
+      position: relative;
+    }
+    #cake {
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1 (Countdown Timer) -->
+  <div id="page1" class="page">
+    <div class="timer" id="timer"></div>
+    <h1>Time Till Cutie's Birthday</h1>
+  </div>
+
+  <!-- Page 2 (Happy Birthday) -->
+  <div id="page2" class="page">
+    <h1><b>Happy Birthday Samra 🎉</b></h1>
+    <button class="button" id="nextPageBtn1">Next Page</button>
+  </div>
+
+  <!-- Page 3 (Cake and Blowing Candles) -->
+  <div id="page3" class="page">
+    <h1>Blow into the microphone</h1>
+    <div id="cake-container">
+      <img id="cake" src="cake-lit.png" alt="Cake with Lit Candles">
+    </div>
+    <button class="button" id="nextPageBtn2" style="display:none;" onclick="showPage4()">Next Page</button>
+  </div>
+
+  <!-- Page 4 (Final Wish with Cat) -->
+  <div id="page4" class="page">
+    <div class="wish-message">Happy Birthday Samra</div>
+    <div class="wish-details">
+      My dearest Samra,<br><br>
+      The moment we met six months ago, you've been one of the best parts of my life. Your presence alone makes everything easier, and a lot more beautiful. The way you carry yourself, your kindness, your energy, it's something rare, and I feel lucky to have you in my life. Those pretty eyes of yours. They hold a kind of magic, a depth that makes the world pause for a second. You have this way of making people feel special, of making every moment with you unforgettable. On your special day, I just want you to know that you are truly one of a kind. You deserve all the happiness, love, and success in the world, and I hope this year brings you a lot of success and ease. Keep being the amazing person you are, and never stop shining the way you do. May Allah bless you with a long, healthy, and happy life. Enjoy your day to the fullest, you deserve it queen.
+    </div>
+    <img src="image7.jpg" alt="Cute Cat" width="200">
+  </div>
+
+  <script>
+    // Set the target date (midnight on 5th Feb 2024)
+    const targetDate = new Date('2024-02-05T00:00:00').getTime();
+
+    // Function to update the countdown timer
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      // If the countdown has ended, transition to Page 2
+      if (distance <= 0) {
+        document.getElementById("page1").style.display = "none";
+        document.getElementById("page2").style.display = "block";
+        return;
+      }
+
+      // Calculate the time remaining
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the countdown
+      document.getElementById("timer").innerHTML =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+      // Update the countdown every 1 second
+      setTimeout(updateCountdown, 1000);
+    }
+
+    // Start the countdown on page load
+    window.onload = updateCountdown;
+
+    // Transition to Page 3 when "Next Page" button on Page 2 is clicked
+    document.getElementById("nextPageBtn1").onclick = function() {
+      document.getElementById("page2").style.display = "none";
+      document.getElementById("page3").style.display = "block";
+      startBlowDetection();
+    };
+
+    // Handle the blowing candles mechanism (using microphone)
+    let blowCount = 0;
+
+    // Start blow detection
+    function startBlowDetection() {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(function(stream) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const analyser = audioContext.createAnalyser();
+            const source = audioContext.createMediaStreamSource(stream);
+            source.connect(analyser);
+            analyser.fftSize = 512;
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function detectBlow() {
+              analyser.getByteFrequencyData(dataArray);
+              let total = 0;
+              for (let i = 0; i < bufferLength; i++) {
+                total += dataArray[i];
+              }
+              if (total > 3000) { // Threshold to detect a blow
+                blowCount++;
+                if (blowCount === 2) {
+                  document.getElementById("cake").src = "cake-blown.png"; // Change cake image
+                  document.getElementById("nextPageBtn2").style.display = "block"; // Show next page button
+                }
+              }
+            }
+
+            setInterval(detectBlow, 100);
+          }).catch(function(err) {
+            alert("Microphone permission is required to continue.");
+          });
+      } else {
+        alert("Microphone is not supported.");
+      }
+    }
+
+    // Transition to Page 4 when "Next Page" button on Page 3 is clicked
+    function showPage4() {
+      document.getElementById("page3").style.display = "none";
+      document.getElementById("page4").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
