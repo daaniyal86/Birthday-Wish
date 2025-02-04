@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .page {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            display: none;
+            position: relative;
+        }
+        .message {
+            color: white;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #cake {
+            width: 250px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        #skip-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff6347;
+            padding: 10px 20px;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+        #next-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Page 1 -->
+<div id="page1" class="page" style="background-image: url('image1.jpg');">
+    <div class="message">
+        <p>Time Till Cutie's Birthday</p>
+        <p id="timer"></p>
+    </div>
+</div>
+
+<!-- Page 2 -->
+<div id="page2" class="page" style="background-image: url('image2.jpg');">
+    <div class="message">
+        <h1><strong>Happy Birthday Samra 🎉</strong></h1>
+    </div>
+    <button id="next-button" onclick="goToPage(3)">Next Page</button>
+</div>
+
+<!-- Page 3 -->
+<div id="page3" class="page" style="background-image: url('image3.jpg');">
+    <div class="message">
+        <h2>Blow into the microphone</h2>
+        <img id="cake" src="cake-lit.png" alt="Cake with lit candles" />
+    </div>
+    <button id="skip-button" style="display:none;" onclick="goToPage(4)">Skip to Next Page</button>
+</div>
+
+<!-- Page 4 -->
+<div id="page4" class="page" style="background-image: url('image6.jpg');">
+    <div class="message">
+        <h1 style="font-family: 'Times New Roman', serif; font-size: 40px;">Happy Birthday Samra</h1>
+        <p style="font-family: 'Bookman Old Style', serif; font-size: 24px;">
+            My dearest Samra,<br><br>
+            The moment we met six months ago, you've been one of the best parts of my life. Your presence alone makes everything easier, and a lot more beautiful. The way you carry yourself, your kindness, your energy, it's something rare, and I feel lucky to have you in my life. Those pretty eyes of yours. They hold a kind of magic, a depth that makes the world pause for a second. You have this way of making people feel special, of making every moment with you unforgettable. On your special day, I just want you to know that you are truly one of a kind. You deserve all the happiness, love, and success in the world, and I hope this year brings you a lot of success and ease. Keep being the amazing person you are, and never stop shining the way you do. May Allah bless you with a long, healthy, and happy life. Enjoy your day to the fullest, you deserve it queen.
+        </p>
+        <img src="image7.jpg" alt="Cat with hat" style="width: 200px; margin-top: 20px;" />
+    </div>
+</div>
+
+<script>
+// Get the URL parameters (to check for key)
+const urlParams = new URLSearchParams(window.location.search);
+const hasKey = urlParams.get('key') === 'unlock';  // Check if the URL has 'key=unlock'
+
+// Timer functionality for Page 1
+const countdownDate = new Date("Feb 5, 2024 00:00:00").getTime();
+const timerElement = document.getElementById("timer");
+
+function updateTimer() {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    timerElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+
+    if (distance < 0) {
+        clearInterval(timerInterval);
+        goToPage(2); // Transition to Page 2 when timer ends
+    }
+}
+
+const timerInterval = setInterval(updateTimer, 1000);
+
+// Show Page 2 when the timer ends
+function goToPage(pageNumber) {
+    document.getElementById("page" + pageNumber).style.display = "block";
+    if (pageNumber === 3) {
+        setTimeout(() => {
+            document.getElementById('skip-button').style.display = "block";  // Show skip button on Page 3 after timer
+        }, 3000); // Show the skip button after 3 seconds
+    }
+}
+
+// Initialize Pages
+goToPage(1); // Start at Page 1
+
+// Show Pages manually if 'key=unlock' is in URL
+if (hasKey) {
+    // Show all pages manually if the user has the key
+    document.getElementById("page1").style.display = "block";
+    document.getElementById("page2").style.display = "block";
+    document.getElementById("page3").style.display = "block";
+    document.getElementById("page4").style.display = "block";
+}
+
+// Cake blowing functionality for Page 3
+let blowCount = 0;
+let cakeImage = document.getElementById('cake');
+
+// Function to simulate blowing action (for now it is just a click event)
+function simulateBlow() {
+    blowCount++;
+    if (blowCount === 2) {
+        cakeImage.src = "cake-blown.png";  // Change to blown cake image
+        document.getElementById('skip-button').style.display = "block";  // Show skip button
+    }
+}
+
+// Simulate blowing action when the user clicks the cake image
+cakeImage.addEventListener('click', simulateBlow);
+</script>
+
+</body>
+</html>
