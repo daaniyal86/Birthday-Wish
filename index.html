@@ -97,7 +97,7 @@
     <h1>🎂 Blow the Candles! 🎤</h1>
     <p id="blow-text">Blow into your microphone!</p>
     <!-- Initially, show the cake with lit candles (Image 4) -->
-    <img src="cake-lit.jpg" alt="Cake with Lit Candles" class="cake-img" id="cake-image">
+    <img src="cake-lit.png" alt="Cake with Lit Candles" class="cake-img" id="cake-image">
     <!-- (A virtual burning effect could be applied via CSS animations if desired) -->  
   </div>
 
@@ -207,7 +207,7 @@
             blowCount++;
             if (blowCount >= 2) {
               // Switch from cake with lit candles (Image 4) to cake with blown-out candles (Image 5)
-              document.getElementById("cake-image").src = "cake-blown.jpg";
+              document.getElementById("cake-image").src = "cake-blown.png";
               document.getElementById("blow-text").innerText = "Candles blown out!";
               // After 2 seconds, show the "Next Page" button.
               setTimeout(() => {
