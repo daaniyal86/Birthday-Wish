@@ -5,151 +5,227 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Surprise for Samra</title>
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            font-family: Arial, sans-serif;
-            text-align: center;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        #page1 {
+            background-image: url('image1.jpg');
+        }
+
+        #page2 {
+            background-image: url('image2.jpg');
+        }
+
+        #page3 {
+            background-image: url('image3.jpg');
+            position: relative;
+        }
+
+        #cake-lit {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: block;
+        }
+
+        #cake-blown {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+
+        #page4 {
+            background-image: url('image6.jpg');
+        }
+
+        #wish {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
             color: white;
+            font-size: 24px;
+            text-align: center;
+            font-family: 'Bookman Old Style', serif;
         }
-        .hidden { display: none; }
-        .message {
-            font-size: 28px;
+
+        #wish h1 {
+            font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px;
-            border-radius: 10px;
+            font-size: 36px;
         }
-        #skip-btn {
+
+        #skip-button {
             position: absolute;
             bottom: 20px;
             right: 20px;
             padding: 10px 20px;
-            background: #ff4081;
-            color: white;
+            background-color: #ffcc00;
+            color: black;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            display: none;
         }
-        #skip-btn:hover {
-            background: #d81b60;
+
+        #skip-button:hover {
+            background-color: #ff9900;
+        }
+
+        #mic-message {
+            color: white;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
         }
     </style>
 </head>
-<body id="page1">
-    <div id="timer-page">
-        <h1 class="message">Time Till Cutie's Birthday</h1>
-        <h2 id="countdown" class="message"></h2>
+<body>
+
+    <div id="page1" class="page">
+        <div id="timer"></div>
+    </div>
+    
+    <div id="page2" class="page">
+        <h1>Happy Birthday Samra 🎉</h1>
     </div>
 
-    <div id="birthday-page" class="hidden">
-        <h1 class="message">🎉 Happy Birthday Samra! 🎉</h1>
+    <div id="page3" class="page">
+        <div id="mic-message">Blow into the microphone</div>
+        <img id="cake-lit" src="cake-lit.png" alt="Cake with lit candles">
+        <img id="cake-blown" src="cake-blown.png" alt="Cake with blown-out candles">
     </div>
 
-    <div id="cake-page" class="hidden">
-        <h1 class="message" id="blow-message">Blow into the microphone!</h1>
-        <img id="cake" src="cake-lit.png" width="300">
-        <button id="skip-btn" class="hidden" onclick="showPage(4)">Next Page</button>
+    <div id="page4" class="page">
+        <div id="wish">
+            <h1>Happy Birthday Samra</h1>
+            <p>My dearest Samra, The moment we met six months ago, you've been one of the best parts of my life. Your presence alone makes everything easier, and a lot more beautiful. The way you carry yourself, your kindness, your energy, it's something rare, and I feel lucky to have you in my life. Those pretty eyes of yours. They hold a kind of magic, a depth that makes the world pause for a second. You have this way of making people feel special, of making every moment with you unforgettable. On your special day, I just want you to know that you are truly one of a kind. You deserve all the happiness, love, and success in the world, and I hope this year brings you a lot of success and ease. Keep being the amazing person you are, and never stop shining the way you do. May Allah bless you with a long, healthy, and happy life. Enjoy your day to the fullest, you deserve it queen.</p>
+            <img src="image7.jpg" alt="Cat with a hat" style="width: 100px;">
+        </div>
     </div>
 
-    <div id="wish-page" class="hidden">
-        <h1 style="font-family: 'Times New Roman', serif;">🎉 Happy Birthday Samra 🎉</h1>
-        <p style="font-family: 'Bookman Old Style', serif; font-size: 20px;">
-            My dearest Samra, The moment we met six months ago, you've been one of the best parts of my life.
-            Your presence alone makes everything easier, and a lot more beautiful...
-            <br><br>
-            May Allah bless you with a long, healthy and happy life. Enjoy your day to the fullest, you deserve it queen.
-        </p>
-        <img src="image7.jpg" width="200">
-    </div>
+    <button id="skip-button" onclick="nextPage()">Skip to Page 4</button>
 
     <script>
-        // Set background images
-        const backgrounds = {
-            1: "image1.jpg",
-            2: "image2.jpg",
-            3: "image3.jpg",
-            4: "image6.jpg"
-        };
-
-        // Function to change pages
-        function showPage(page) {
-            document.body.style.backgroundImage = `url('${backgrounds[page]}')`;
-            document.querySelectorAll("div").forEach(div => div.classList.add("hidden"));
-            document.getElementById(`${page === 1 ? 'timer' : page === 2 ? 'birthday' : page === 3 ? 'cake' : 'wish'}-page`).classList.remove("hidden");
-        }
-
-        // Timer countdown
         const countdownDate = new Date("Feb 5, 2024 00:00:00").getTime();
-        const countdownInterval = setInterval(() => {
-            const now = new Date().getTime();
-            const timeLeft = countdownDate - now;
+        let micAttempts = 0;
 
-            if (timeLeft < 0) {
-                clearInterval(countdownInterval);
-                showPage(2);
-            } else {
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                document.getElementById("countdown").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }
-        }, 1000);
+        const userAccessCode = 'your_access_code'; // Change this to your access code
 
-        // Microphone detection for candle blowing
-        let blowCount = 0;
-        function detectBlow() {
-            navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-                const audioContext = new AudioContext();
-                const analyser = audioContext.createAnalyser();
-                const microphone = audioContext.createMediaStreamSource(stream);
-                microphone.connect(analyser);
-                analyser.fftSize = 256;
+        // Check URL for access code
+        const urlParams = new URLSearchParams(window.location.search);
+        const accessCode = urlParams.get('accessCode');
+        const isAdmin = accessCode === userAccessCode;
 
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
+        let timerInterval;
+        let currentPage = 1;
 
-                function checkBlow() {
-                    analyser.getByteFrequencyData(dataArray);
-                    const volume = dataArray.reduce((acc, val) => acc + val, 0) / bufferLength;
-
-                    if (volume > 20) { // User blew into the mic
-                        blowCount++;
-                        if (blowCount >= 2) {
-                            document.getElementById("cake").src = "cake-blown.png";
-                            document.getElementById("blow-message").innerText = "Candles blown out! 🎂";
-                            document.getElementById("skip-btn").classList.remove("hidden");
-                        }
-                    }
-
-                    requestAnimationFrame(checkBlow);
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    transitionToPage(2);
+                } else {
+                    const hours = Math.floor((distance % (100 * 60 * 60)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    timerElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
                 }
-
-                checkBlow();
-            }).catch(err => {
-                alert("Microphone access is needed to blow the candles!");
-            });
+            }, 1000);
         }
 
-        // Restrict access before Feb 5, 2024 (except for you)
-        const accessCode = "letmein";
-        const params = new URLSearchParams(window.location.search);
-        if (new Date().getTime() < countdownDate && params.get("access") !== accessCode) {
-            showPage(1);
-        } else {
-            if (params.get("page")) {
-                showPage(parseInt(params.get("page")));
-                if (parseInt(params.get("page")) === 3) detectBlow();
+        function transitionToPage(pageNumber) {
+            document.querySelectorAll('.page').forEach((page, index) => {
+                page.classList.remove('active');
+            });
+            document.getElementById('page' + pageNumber).classList.add('active');
+            currentPage = pageNumber;
+
+            if (pageNumber === 3 && !isAdmin) {
+                startBlowingCandles();
             }
         }
+
+        function startBlowingCandles() {
+            const cakeLit = document.getElementById('cake-lit');
+            const cakeBlown = document.getElementById('cake-blown');
+            const micMessage = document.getElementById('mic-message');
+
+            // Listen for microphone input
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const analyser = audioContext.createAnalyser();
+                    const source = audioContext.createMediaStreamSource(stream);
+                    source.connect(analyser);
+                    analyser.fftSize = 256;
+                    const bufferLength = analyser.frequencyBinCount;
+                    const dataArray = new Uint8Array(bufferLength);
+
+                    analyser.getByteFrequencyData(dataArray);
+
+                    const checkBlow = () => {
+                        let isBlowing = dataArray.some(value => value > 100); // Adjust threshold as needed
+                        if (isBlowing) {
+                            micAttempts++;
+                            if (micAttempts >= 2) {
+                                cakeLit.style.display = 'none';
+                                cakeBlown.style.display = 'block';
+                                micMessage.innerText = 'Candles Blown Out! Click Skip to continue.';
+                                document.getElementById('skip-button').style.display = 'block';
+                                stream.getTracks().forEach(track => track.stop()); // Stop listening after two attempts
+                            } else {
+                                micMessage.innerText = 'Keep Blowing!';
+                            }
+                        }
+                    };
+
+                    setInterval(checkBlow, 100); // Check for blow every 100ms
+                })
+                .catch(err => console.error("Error accessing microphone:", err));
+        }
+
+        function nextPage() {
+            if (currentPage === 3) {
+                transitionToPage(4);
+            }
+        }
+
+        function init() {
+            if (isAdmin) {
+                transitionToPage(1);
+                startTimer();
+            } else {
+                transitionToPage(1);
+            }
+        }
+
+        window.onload = init;
+
     </script>
 </body>
 </html>
