@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise for Samra</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+        .hidden { display: none; }
+        .message {
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        #skip-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #ff4081;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #skip-btn:hover {
+            background: #d81b60;
+        }
+    </style>
+</head>
+<body id="page1">
+    <div id="timer-page">
+        <h1 class="message">Time Till Cutie's Birthday</h1>
+        <h2 id="countdown" class="message"></h2>
+    </div>
+
+    <div id="birthday-page" class="hidden">
+        <h1 class="message">🎉 Happy Birthday Samra! 🎉</h1>
+    </div>
+
+    <div id="cake-page" class="hidden">
+        <h1 class="message" id="blow-message">Blow into the microphone!</h1>
+        <img id="cake" src="cake-lit.png" width="300">
+        <button id="skip-btn" class="hidden" onclick="showPage(4)">Next Page</button>
+    </div>
+
+    <div id="wish-page" class="hidden">
+        <h1 style="font-family: 'Times New Roman', serif;">🎉 Happy Birthday Samra 🎉</h1>
+        <p style="font-family: 'Bookman Old Style', serif; font-size: 20px;">
+            My dearest Samra, The moment we met six months ago, you've been one of the best parts of my life.
+            Your presence alone makes everything easier, and a lot more beautiful...
+            <br><br>
+            May Allah bless you with a long, healthy and happy life. Enjoy your day to the fullest, you deserve it queen.
+        </p>
+        <img src="image7.jpg" width="200">
+    </div>
+
+    <script>
+        // Set background images
+        const backgrounds = {
+            1: "image1.jpg",
+            2: "image2.jpg",
+            3: "image3.jpg",
+            4: "image6.jpg"
+        };
+
+        // Function to change pages
+        function showPage(page) {
+            document.body.style.backgroundImage = `url('${backgrounds[page]}')`;
+            document.querySelectorAll("div").forEach(div => div.classList.add("hidden"));
+            document.getElementById(`${page === 1 ? 'timer' : page === 2 ? 'birthday' : page === 3 ? 'cake' : 'wish'}-page`).classList.remove("hidden");
+        }
+
+        // Timer countdown
+        const countdownDate = new Date("Feb 5, 2024 00:00:00").getTime();
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const timeLeft = countdownDate - now;
+
+            if (timeLeft < 0) {
+                clearInterval(countdownInterval);
+                showPage(2);
+            } else {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }, 1000);
+
+        // Microphone detection for candle blowing
+        let blowCount = 0;
+        function detectBlow() {
+            navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+                const audioContext = new AudioContext();
+                const analyser = audioContext.createAnalyser();
+                const microphone = audioContext.createMediaStreamSource(stream);
+                microphone.connect(analyser);
+                analyser.fftSize = 256;
+
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+
+                function checkBlow() {
+                    analyser.getByteFrequencyData(dataArray);
+                    const volume = dataArray.reduce((acc, val) => acc + val, 0) / bufferLength;
+
+                    if (volume > 20) { // User blew into the mic
+                        blowCount++;
+                        if (blowCount >= 2) {
+                            document.getElementById("cake").src = "cake-blown.png";
+                            document.getElementById("blow-message").innerText = "Candles blown out! 🎂";
+                            document.getElementById("skip-btn").classList.remove("hidden");
+                        }
+                    }
+
+                    requestAnimationFrame(checkBlow);
+                }
+
+                checkBlow();
+            }).catch(err => {
+                alert("Microphone access is needed to blow the candles!");
+            });
+        }
+
+        // Restrict access before Feb 5, 2024 (except for you)
+        const accessCode = "letmein";
+        const params = new URLSearchParams(window.location.search);
+        if (new Date().getTime() < countdownDate && params.get("access") !== accessCode) {
+            showPage(1);
+        } else {
+            if (params.get("page")) {
+                showPage(parseInt(params.get("page")));
+                if (parseInt(params.get("page")) === 3) detectBlow();
+            }
+        }
+    </script>
+</body>
+</html>
