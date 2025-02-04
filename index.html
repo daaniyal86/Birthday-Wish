@@ -1,174 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Samra</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #fff;
-        }
-
-        .page {
-            display: none;
-            height: 100vh;
-            width: 100vw;
-            position: absolute;
-        }
-
-        #page1 {
-            background-image: url('image1.jpg');
-            background-size: cover;
-            background-position: center;
-            display: block;
-        }
-
-        #page2 {
-            background-image: url('image2.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        #page3 {
-            background-image: url('image3.jpg');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        #page4 {
-            background-image: url('image6.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        #timer {
-            font-size: 2em;
-            color: white;
-            text-align: center;
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            transform: translateY(-50%);
-        }
-
-        #message {
-            font-size: 3em;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            transform: translateY(-50%);
-        }
-
-        #skip-button {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #f1c40f;
-            border: none;
-            cursor: pointer;
-        }
-
-        #skip-button:hover {
-            background-color: #e67e22;
-        }
-
-        #blow-message {
-            position: absolute;
-            top: 20px;
-            width: 100%;
-            text-align: center;
-            font-size: 1.5em;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Countdown</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      display: none;
+    }
+    #page1 {
+      display: block;
+      text-align: center;
+      background-image: url('image1.jpg'); /* Replace with your background image */
+      background-size: cover;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #page2 {
+      display: none;
+      text-align: center;
+      background-image: url('image2.jpg'); /* Replace with your background image */
+      background-size: cover;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #page3 {
+      display: none;
+      text-align: center;
+      background-image: url('image3.jpg'); /* Replace with your background image */
+      background-size: cover;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #page4 {
+      display: none;
+      text-align: center;
+      background-image: url('image6.jpg'); /* Replace with your background image */
+      background-size: cover;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .timer {
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .wish-message {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 36px;
+    }
+    .wish-details {
+      font-family: 'Bookman Old Style', serif;
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Page 1 -->
-    <div id="page1" class="page">
-        <div id="timer"></div>
-        <div id="message">Time Till Cutie's Birthday</div>
+  <!-- Page 1 (Countdown Timer) -->
+  <div id="page1" class="page">
+    <div class="timer" id="timer"></div>
+    <h1>Time Till Cutie's Birthday</h1>
+  </div>
+
+  <!-- Page 2 (Happy Birthday) -->
+  <div id="page2" class="page">
+    <h1><b>Happy Birthday Samra 🎉</b></h1>
+  </div>
+
+  <!-- Page 3 (Cake and Blowing Candles) -->
+  <div id="page3" class="page">
+    <h1>Blow into the microphone</h1>
+    <div id="cake-container">
+      <img id="cake" src="cake-lit.png" alt="Cake with Lit Candles" width="300">
     </div>
+    <button id="skip-btn" style="display: none;" onclick="showPage4()">Skip to Next Page</button>
+  </div>
 
-    <!-- Page 2 -->
-    <div id="page2" class="page">
-        <div id="message">Happy Birthday Samra 🎉</div>
+  <!-- Page 4 (Final Wish with Cat) -->
+  <div id="page4" class="page">
+    <div class="wish-message">Happy Birthday Samra</div>
+    <div class="wish-details">
+      My dearest Samra,<br><br>
+      The moment we met six months ago, you've been one of the best parts of my life. Your presence alone makes everything easier, and a lot more beautiful. The way you carry yourself, your kindness, your energy, it's something rare, and I feel lucky to have you in my life. Those pretty eyes of yours. They hold a kind of magic, a depth that makes the world pause for a second. You have this way of making people feel special, of making every moment with you unforgettable. On your special day, I just want you to know that you are truly one of a kind. You deserve all the happiness, love, and success in the world, and I hope this year brings you a lot of success and ease. Keep being the amazing person you are, and never stop shining the way you do. May Allah bless you with a long, healthy, and happy life. Enjoy your day to the fullest, you deserve it queen.
     </div>
+    <img src="image7.jpg" alt="Cat with Hat" width="200">
+  </div>
 
-    <!-- Page 3 -->
-    <div id="page3" class="page">
-        <div id="blow-message">Blow into the microphone</div>
-        <img src="cake-lit.png" id="cakeImage" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <button id="skip-button" onclick="goToPage(4)" style="display: none;">Skip to Page 4</button>
-    </div>
+  <script>
+    // Check if the URL contains the special key to access all pages
+    const urlParams = new URLSearchParams(window.location.search);
+    const key = urlParams.get('key');
 
-    <!-- Page 4 -->
-    <div id="page4" class="page">
-        <div style="font-size: 2em; font-family: 'Times New Roman', serif; font-weight: bold;">Happy Birthday Samra</div>
-        <div style="font-family: 'Bookman Old Style', serif; font-size: 1.5em;">
-            My dearest Samra,<br><br>
-            The moment we met six months ago, you've been one of the best parts of my life. Your presence alone makes everything easier, and a lot more beautiful. The way you carry yourself, your kindness, your energy, it's something rare, and I feel lucky to have you in my life. Those pretty eyes of yours. They hold a kind of magic, a depth that makes the world pause for a second. You have this way of making people feel special, of making every moment with you unforgettable. On your special day, I just want you to know that you are truly one of a kind. You deserve all the happiness, love, and success in the world, and I hope this year brings you a lot of success and ease. Keep being the amazing person you are, and never stop shining the way you do. May Allah bless you with a long, healthy, and happy life. Enjoy your day to the fullest, you deserve it queen.
-        </div>
-        <img src="image7.jpg" alt="Cat with hat" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 100px;">
-    </div>
+    // If the key exists, allow access to all pages
+    const accessKey = "yoursecretkey"; // Replace this with your actual secret key
 
-    <script>
-        // Timer functionality for Page 1
-        const countdownDate = new Date("Feb 4, 2024 23:59:00").getTime(); // 11:59 PM on Feb 4th
-        const timerElement = document.getElementById("timer");
+    if (key === accessKey) {
+      document.getElementById("page1").style.display = "none";
+      document.getElementById("page2").style.display = "none";
+      document.getElementById("page3").style.display = "none";
+      document.getElementById("page4").style.display = "block"; // Show page 4 directly when key is present
+    }
 
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
+    // Set the target date (11:59 PM on 4th Feb 2024)
+    const targetDate = new Date('2024-02-04T23:59:00').getTime();
 
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Function to update the countdown timer
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-            timerElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+      // If the countdown has ended, transition to page 2
+      if (distance <= 0) {
+        document.getElementById("page1").style.display = "none";
+        document.getElementById("page2").style.display = "block";
+        return;
+      }
 
-            if (distance < 0) {
-                clearInterval(timerInterval);
-                goToPage(2); // Transition to Page 2 when timer ends
-            }
-        }
+      // Calculate the time remaining
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        const timerInterval = setInterval(updateTimer, 1000);
+      // Display the countdown
+      document.getElementById("timer").innerHTML =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
-        // Function to go to different pages
-        function goToPage(pageNumber) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.style.display = 'none'); // Hide all pages
-            document.getElementById('page' + pageNumber).style.display = 'block'; // Show the selected page
-        }
+      // Update the countdown every 1 second
+      setTimeout(updateCountdown, 1000);
+    }
 
-        // Function to simulate blowing out candles
-        let blowAttempts = 0;
+    // Start the countdown on page load
+    window.onload = updateCountdown;
 
-        function handleBlowEvent() {
-            blowAttempts++;
-            if (blowAttempts >= 2) {
-                document.getElementById('cakeImage').src = 'cake-blown.png'; // Change to the blown-out cake image
-                document.getElementById('skip-button').style.display = 'block'; // Show the "skip to page 4" button
-            }
-        }
+    // Function to handle the blowing candles effect
+    let blowCount = 0;
 
-        // Simple microphone detection (not implemented in full here)
-        window.addEventListener('click', handleBlowEvent); // Just a placeholder event, change to microphone detection logic
+    // Simulate the microphone blowing effect
+    function microphoneBlow() {
+      blowCount++;
+      if (blowCount === 2) {
+        // Change the cake image to blown out candles after 2 blows
+        document.getElementById("cake").src = "cake-blown.png";
+        document.getElementById("skip-btn").style.display = "block"; // Show the "Skip to Next Page" button
+      }
+    }
 
-        // Initially show Page 1
-        goToPage(1);
-    </script>
+    // Add event listener for blowing into the microphone (simulate with a button for testing)
+    document.getElementById("cake-container").addEventListener('click', microphoneBlow);
+
+    // Function to show Page 4 when skip button is clicked
+    function showPage4() {
+      document.getElementById("page3").style.display = "none";
+      document.getElementById("page4").style.display = "block";
+    }
+  </script>
+
 </body>
 </html>
