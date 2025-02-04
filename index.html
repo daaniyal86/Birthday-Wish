@@ -1,164 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Samra! 🎉🎂</title>
-    <style>
-        body {
-            font-family: 'Bookman Old Style', serif;
-            background: url('countdown-bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
-        .container {
-            display: none; /* Hidden by default */
-            max-width: 80%;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 20px;
-            align-items: center;
-        }
-        h1 {
-            font-family: 'Times New Roman', serif;
-            font-size: 4rem;
-            color: #ffcc00;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.5rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-        .next-button {
-            font-size: 1.5rem;
-            padding: 10px 20px;
-            background: #ffcc00;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        #countdown {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-top: 40px;
-        }
-        /* Backgrounds for each section */
-        .confetti { background: url('confetti-bg.jpg') no-repeat center center fixed; background-size: cover; }
-        .cake-container { background: url('cake-bg.jpg') no-repeat center center fixed; background-size: cover; }
-        .wish-container { background: url('wish-bg.jpg') no-repeat center center fixed; background-size: cover; }
-
-        .cake-img { width: 300px; }
-        .wish-img { width: 300px; border-radius: 10px; margin-top: 20px; }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Samra! 🎉🎂</title>
+  <style>
+    /* General body styling */
+    body {
+      font-family: 'Bookman Old Style', serif;
+      background-size: cover;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    /* Container for each page */
+    .container {
+      display: none;
+      max-width: 80%;
+      background: rgba(0,0,0,0.6);
+      padding: 30px;
+      border-radius: 10px;
+    }
+    /* Headings & paragraphs */
+    h1 {
+      font-family: 'Times New Roman', serif;
+      font-size: 4rem;
+      color: #ffcc00;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.5rem;
+      line-height: 1.6;
+    }
+    /* Next button styling */
+    .next-button {
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      background: #ffcc00;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    /* Countdown text */
+    #countdown {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-top: 40px;
+    }
+    /* Page 3 cake image styling */
+    .cake-img {
+      width: 300px;
+    }
+    /* Final wish page cat image styling */
+    .wish-img {
+      width: 300px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    /* Final wish typography: Title in Times New Roman, wish text in Bookman Old Style */
+    .wish-title {
+      font-family: 'Times New Roman', serif;
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .wish-text {
+      font-family: 'Bookman Old Style', serif;
+      font-size: 1.5rem;
+      line-height: 1.6;
+    }
+  </style>
 </head>
-<body>
+<body id="page-background">
+  <!-- Page 1: Countdown Page (Background: Image 1) -->
+  <div id="countdown-section" class="container">
+    <h2>⏳ Time Till Cutie's Birthday</h2>
+    <h2 id="countdown">Loading...</h2>
+  </div>
 
-    <!-- Countdown Timer Section -->
-    <div id="countdown-section">
-        <h2>⏳ Time till cutie's Birthday:</h2>
-        <h2 id="countdown">Loading...</h2>
+  <!-- Page 2: Birthday Greeting (Background: Image 2) -->
+  <div id="happy-birthday-page" class="container">
+    <h1>🎉 Happy Birthday Samra 🎂</h1>
+    <button class="next-button" onclick="goToBlowCandles()">Next Page</button>
+  </div>
+
+  <!-- Page 3: Blow the Candles (Background: Image 3) -->
+  <div id="blow-candles-page" class="container">
+    <h1>🎂 Blow the Candles! 🎤</h1>
+    <p id="blow-text">Blow into your microphone!</p>
+    <!-- Initially, show the cake with lit candles (Image 4) -->
+    <img src="cake-lit.jpg" alt="Cake with Lit Candles" class="cake-img" id="cake-image">
+    <!-- (A virtual burning effect could be applied via CSS animations if desired) -->  
+  </div>
+
+  <!-- Page 4: Final Wish (Background: Image 6) -->
+  <div id="birthday-message" class="container">
+    <div class="wish-title">Happy Birthday Samra</div>
+    <div class="wish-text">
+      My dearest Samra,<br><br>
+      The moment we met six months ago, you've been one of the best parts of my life. Your presence alone makes everything easier, and a lot more beautiful. The way you carry yourself, your kindness, your energy, it's something rare, and I feel lucky to have you in my life.<br><br>
+      Those pretty eyes of yours. They hold a kind of magic, a depth that makes the world pause for a second. You have this way of making people feel special, of making every moment with you unforgettable.<br><br>
+      On your special day, I just want you to know that you are truly one of a kind. You deserve all the happiness, love, and success in the world, and I hope this year brings you a lot of success and ease.<br><br>
+      Keep being the amazing person you are, and never stop shining the way you do. May Allah bless you with a long, healthy, and happy life. Enjoy your day to the fullest—you deserve it, queen.
     </div>
+    <br>
+    <img src="image7.jpg" alt="Cute Cat with Hat" class="wish-img">
+  </div>
 
-    <!-- Happy Birthday Page -->
-    <div id="happy-birthday-page" class="container confetti">
-        <h1>🎉 Happy Birthday, Samra! 🎂</h1>
-        <button class="next-button" onclick="goToBlowCandles()">Next Page</button>
-    </div>
+  <script>
+    // Utility function to get the query parameter 'user'
+    function getUser() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('user');
+    }
 
-    <!-- Blow Candles Page -->
-    <div id="blow-candles-page" class="container cake-container">
-        <h1>🎂 Blow the Candles! 🎤</h1>
-        <img src="cake-lit.jpg" alt="Cake with Candles" class="cake-img" id="cake-image">
-        <p class="blow-text">Blow into your microphone to put out the candles!</p>
-    </div>
+    // Set background images based on page (you may replace these filenames with your actual images)
+    const backgrounds = {
+      countdown: 'image1.jpg',  // Page 1 background
+      happyBirthday: 'image2.jpg', // Page 2 background
+      cake: 'image3.jpg', // Page 3 background
+      wish: 'image6.jpg'  // Page 4 background
+    };
 
-    <!-- Birthday Wish Page -->
-    <div id="birthday-message" class="container wish-container">
-        <h1>🎂 Happy 25th Birthday, Samra! 🎈</h1>
-        <p>
-            🌟 My dearest Samra, <br><br>
-            I wish you the happiest birthday, a day filled with love, peace, celebration, and thankfulness to Allah...
-            (Your full message remains unchanged)
-        </p>
-        <img src="wish-pic.jpg" alt="Birthday Wish Image" class="wish-img">
-    </div>
+    // Set the background image for the current page by updating the body style
+    function setBackground(imageFile) {
+      document.getElementById('page-background').style.background = `url('${imageFile}') no-repeat center center fixed`;
+      document.getElementById('page-background').style.backgroundSize = 'cover';
+    }
 
-    <script>
-        function checkBirthday() {
-            const now = new Date();
-            const birthday = new Date("Feb 5, 2025 00:00:00");
+    // Developer mode: if URL has ?user=daniyal, then bypass the countdown and let you access pages manually.
+    function checkAccess() {
+      const user = getUser();
+      const birthday = new Date("Feb 5, 2024 00:00:00");
+      const now = new Date();
 
-            if (now >= birthday) {
-                document.getElementById("countdown-section").style.display = "none";
-                document.getElementById("happy-birthday-page").style.display = "block";
-            } else {
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
+      if (user === "daniyal") {
+        // Developer mode: allow manual access to pages immediately.
+        document.getElementById("countdown-section").style.display = "none";
+        document.getElementById("happy-birthday-page").style.display = "block";
+        setBackground(backgrounds.happyBirthday);
+      } else {
+        // Normal users: if it's before the birthday, show only the countdown.
+        if (now < birthday) {
+          // Show countdown page only.
+          document.getElementById("countdown-section").style.display = "block";
+          setBackground(backgrounds.countdown);
+        } else {
+          // On/after birthday, normal users see the greeting.
+          document.getElementById("countdown-section").style.display = "none";
+          document.getElementById("happy-birthday-page").style.display = "block";
+          setBackground(backgrounds.happyBirthday);
+        }
+      }
+    }
+
+    // Countdown functionality for normal users (only active if not in developer mode)
+    function updateCountdown() {
+      const birthday = new Date("Feb 5, 2024 00:00:00").getTime();
+      const now = new Date().getTime();
+      const timeLeft = birthday - now;
+
+      if (timeLeft > 0) {
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      } else {
+        // When countdown is finished, transition to Page 2.
+        document.getElementById("countdown-section").style.display = "none";
+        document.getElementById("happy-birthday-page").style.display = "block";
+        setBackground(backgrounds.happyBirthday);
+      }
+    }
+
+    // Page transitions:
+    // From Page 2 → Page 3 (blow candles)
+    function goToBlowCandles() {
+      document.getElementById("happy-birthday-page").style.display = "none";
+      document.getElementById("blow-candles-page").style.display = "block";
+      setBackground(backgrounds.cake);
+
+      // Start microphone detection for candle blowing.
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let microphone = audioContext.createMediaStreamSource(stream);
+        let analyser = audioContext.createAnalyser();
+        microphone.connect(analyser);
+        analyser.fftSize = 256;
+        let dataArray = new Uint8Array(analyser.frequencyBinCount);
+        let blowCount = 0;
+
+        function detectBlow() {
+          analyser.getByteFrequencyData(dataArray);
+          let volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+
+          if (volume > 50) {  // Threshold for detecting a blow
+            blowCount++;
+            if (blowCount >= 2) {
+              // Switch from cake with lit candles (Image 4) to cake with blown-out candles (Image 5)
+              document.getElementById("cake-image").src = "cake-blown.jpg";
+              document.getElementById("blow-text").innerText = "Candles blown out!";
+              // After 2 seconds, show the "Next Page" button.
+              setTimeout(() => {
+                let nextButton = document.createElement("button");
+                nextButton.innerText = "Next Page";
+                nextButton.classList.add("next-button");
+                nextButton.onclick = goToWishPage;
+                document.getElementById("blow-candles-page").appendChild(nextButton);
+              }, 2000);
             }
+          }
+          requestAnimationFrame(detectBlow);
         }
+        detectBlow();
+      });
+    }
 
-        function updateCountdown() {
-            const birthday = new Date("Feb 5, 2025 00:00:00").getTime();
-            const now = new Date().getTime();
-            const timeLeft = birthday - now;
+    // Transition from Page 3 → Page 4 (Final Wish)
+    function goToWishPage() {
+      document.getElementById("blow-candles-page").style.display = "none";
+      document.getElementById("birthday-message").style.display = "block";
+      setBackground(backgrounds.wish);
+    }
 
-            if (timeLeft > 0) {
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            } else {
-                document.getElementById("countdown-section").style.display = "none";
-                document.getElementById("happy-birthday-page").style.display = "block";
-            }
-        }
-
-        function goToBlowCandles() {
-            document.getElementById("happy-birthday-page").style.display = "none";
-            document.getElementById("blow-candles-page").style.display = "block";
-
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-                let audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                let microphone = audioContext.createMediaStreamSource(stream);
-                let analyser = audioContext.createAnalyser();
-                microphone.connect(analyser);
-                analyser.fftSize = 256;
-                let dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-                function detectBlow() {
-                    analyser.getByteFrequencyData(dataArray);
-                    let volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-
-                    if (volume > 50) {
-                        document.getElementById("cake-image").src = "cake-blown.jpg";
-                        setTimeout(() => {
-                            document.getElementById("blow-candles-page").style.display = "none";
-                            document.getElementById("birthday-message").style.display = "block";
-                        }, 2000);
-                    } else {
-                        requestAnimationFrame(detectBlow);
-                    }
-                }
-                detectBlow();
-            });
-        }
-
-        checkBirthday();
-    </script>
-
+    // Initialize access and (if needed) countdown
+    checkAccess();
+    if (getUser() !== "daniyal") {
+      // For normal users, start the countdown update if not in developer mode.
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+  </script>
 </body>
 </html>
